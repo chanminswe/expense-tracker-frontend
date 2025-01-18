@@ -8,8 +8,8 @@ function Expense() {
           Balance: <span className="text-green-700">$22</span>
         </p>
 
-        <div className="flex flex-wrap gap-4">
-          <div className="w-[45%]">
+        <div className="flex flex-wrap ">
+          <div className="w-[50%] px-1">
             <label className="block text-orange-500 font-bold mb-1">
               Expense
             </label>
@@ -19,7 +19,7 @@ function Expense() {
               className="w-full px-3 py-2 border border-gray-400 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
             />
           </div>
-          <div className="w-[45%]">
+          <div className="w-[50%] px-1">
             <label className="block text-orange-500 font-bold mb-1">
               Reason
             </label>

@@ -23,18 +23,42 @@ function DashBoard() {
 
   const options = {
     title: "Your Expenses",
-    pieHole: 0.4,
+    pieHole: 0.3,
     backgroundColor: "",
-    border: "1px solid black",
-    borderRadius: "15px",
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 w-full p-5">
+    <div
+      className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 w-full p-5"
+      style={{ gridAutoFlow: "dense" }}
+    >
       <IconBox title={"Current amount"} price={2000} />
       <IconBox title={"Total Spent"} price={200} />
       <IconBox title={"Category"} price={2000} />
       <IconBox title={"Revenue"} price={2000} />
+
+      <div className="col-span-2 sm:col-span-1 lg:col-span-1 h-auto w-full border border-black rounded-md p-3">
+        <p className="text-xl font-semibold mb-3">Last Spent Items</p>
+        <div className="w-full">
+          {transactions.map((transaction, index) => (
+            <div
+              key={index}
+              className="flex justify-between items-center p-2 border-b border-black"
+            >
+              <div className="flex flex-col">
+                <p className="text-sm font-medium">{transaction.date}</p>
+                <p className="text-xs text-gray-600">
+                  {transaction.description}
+                </p>
+              </div>
+              <div className="flex flex-col items-end">
+                <p className="text-sm font-medium">${transaction.amount}</p>
+                <p className="text-xs text-gray-600">{transaction.category}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="col-span-2 sm:col-span-2 lg:col-span-2 h-auto w-full border border-black rounded-md">
         <Chart
           chartType="PieChart"
@@ -44,17 +68,22 @@ function DashBoard() {
           height={"400px"}
         />
       </div>
-      <div className="col-span-2 sm:col-span-2 lg:col-span-1 h-auto w-full border border-black rounded-md">
-        <p className="p-3">Last spent items</p>
-        <div className="flex flex-wrap justify-center w-full">
-          {transactions.map((transaction, index) => (
-            <div className="w-full">
-              <p>
-                {transaction.date} {transaction.amount}
-              </p>
-            </div>
-          ))}
-        </div>
+      <div className="col-span-2 sm:col-span-1 lg:col-span-1 h-auto w-full border border-black rounded-md">
+        <Chart
+          chartType="LineChart"
+          data={[
+            ["Date", "Amount"],
+            ["2025-01-01", 50],
+            ["2025-01-02", 30],
+          ]}
+          options={{
+            title: "Expenses Over January",
+            pieHole: 0.3,
+            backgroundColor: "",
+          }}
+          width={"100%"}
+          height={"400px"}
+        />
       </div>
     </div>
   );
