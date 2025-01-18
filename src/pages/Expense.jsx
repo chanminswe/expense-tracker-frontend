@@ -29,12 +29,12 @@ function Expense() {
               className="w-full px-3 py-2 border border-gray-400 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
             />
           </div>
-          <div className="w-full">
+          <div className="w-full px-1">
             <label className="block text-orange-500 font-bold mb-1">
               Category
             </label>
             <select
-              className="w-full px-3 py-2 border border-gray-400 rounded-md text-sm bg-white focus:outline-none focus:ring-1 focus:ring-orange-500 text-base"
+              className="w-full px-2 py-2 border border-gray-400 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-orange-500 text-base"
               defaultValue=""
             >
               <option value="" disabled>
