@@ -1,16 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const [auth, setAuth] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleRegister = () => {};
+
+  const handleLogin = () => {};
   const navigate = useNavigate();
   return (
     <div className="flex justify-center items-center w-full h-[100vh] ">
       <form className="w-[90%] h-72 border border-gray-500 shadow-black shadow-sm rounded-md p-5 bg-orange-100 sm:w-[50%] md:w-[40%] lg:w-[30%]">
         <fieldset className="w-full h-full ">
           <label className="text-orange-500 font-bold my-2">Username</label>
-          <input className="w-full px-2 py-1 border border-black rounded-md my-2" />
+          <input
+            onChange={(e) => setAuth({ username: e.target.value })}
+            className="w-full px-2 py-1 border border-black rounded-md my-2"
+          />
           <label className="text-orange-500 font-bold my-2">Password</label>
-          <input className="w-full px-2 py-1 border border-black rounded-md my-2" />
+          <input
+            onChange={(e) => setAuth({ password: e.target.value })}
+            className="w-full px-2 py-1 border border-black rounded-md my-2"
+          />
           <div className="flex h-[40%] justify-around items-center">
             <button
               onClick={() => navigate("expensecal")}

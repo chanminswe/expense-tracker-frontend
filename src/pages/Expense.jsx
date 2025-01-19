@@ -19,7 +19,7 @@ function Expense() {
 
         <button
           onClick={handleToggle}
-          className="absolute top-5 right-5 border rounded-md px-4 py-2 bg-red-500 text-white hover:bg-red-400 transition duration-300"
+          className="absolute top-5 right-5 border rounded-md px-1 py-2 bg-red-500 text-white text-sm hover:bg-red-400 transition duration-300"
         >
           {toggleCal ? "Income Page" : "Expense Page"}
         </button>
@@ -63,7 +63,7 @@ function Transaction({ type }) {
       <div className="w-full px-2 mb-4">
         <label className="block text-orange-500 font-bold mb-1">Category</label>
         <select
-          className="w-full px-3 py-2 border border-gray-400 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-orange-500 text-sm"
+          className="w-full px-3 py-3 border border-gray-400 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-orange-500 text-md"
           defaultValue=""
         >
           <option value="" disabled>
@@ -80,11 +80,11 @@ function Transaction({ type }) {
       <div className="w-full flex justify-between items-center">
         <button
           onClick={() => navigate("expensecal")}
-          className="w-[40%] px-4 py-2 rounded-md bg-orange-600 text-white hover:scale-105 transition duration-300"
+          className="w-[40%] px-1 py-2 rounded-md bg-orange-600 text-white text-sm hover:scale-105 transition duration-300"
         >
           Add {type === "expense" ? "Expense" : "Income"}
         </button>
-        <button className="w-[40%] px-4 py-2 rounded-md bg-orange-600 text-white hover:scale-105 transition duration-300">
+        <button className="w-[40%] px-1 py-2 rounded-md bg-orange-600 text-white text-sm hover:scale-105 transition duration-300">
           View History
         </button>
       </div>
