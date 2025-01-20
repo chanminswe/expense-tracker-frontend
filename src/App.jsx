@@ -1,17 +1,25 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Expense from "./pages/Expense";
 import NavBar from "./components/NavBar";
 import DashBoard from "./pages/DashBoard";
+import ProtectedRoute, { isAuthenticated } from "./routes/ProtectedRoute";
 
 function App() {
+  const isAuth = isAuthenticated();
   return (
     <>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/expensecal" element={<Expense />} />
-        <Route path="/dashboard" element={<DashBoard />} />
+        <Route
+          path="/"
+          element={<Navigate to={isAuth ? "/dashboard" : "/login"} />}
+        />
+        <Route path="/login" element={<Login />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/expensecal" element={<Expense />} />
+          <Route path="/dashboard" element={<DashBoard />} />
+        </Route>
       </Routes>
       <NavBar />
     </>
