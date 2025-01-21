@@ -1,38 +1,79 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
-  const [auth, setAuth] = useState({
-    username: "",
-    password: "",
-  });
-
-  const handleRegister = () => {};
-
-  const handleLogin = () => {};
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const handleRegister = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:4040/api/auth/register",
+        {
+          username,
+          password,
+        }
+      );
+      const jwt_Token = response.data.jwt_token;
+      console.log("Register successful:", response.data);
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+      alert("Login failed. Please check your credentials.");
+    }
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:4040/api/auth/login",
+        {
+          username,
+          password,
+        }
+      );
+      const jwt_Token = response.data.jwt_Token;
+      window.localStorage.setItem("jwt_token", jwt_Token);
+      console.log("Token saved successfully:", jwt_Token);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+      alert("Login failed. Please check your credentials.");
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center w-full h-[100vh] ">
-      <form className="w-[90%] h-72 border border-gray-500 shadow-black shadow-sm rounded-md p-5 bg-orange-100 sm:w-[50%] md:w-[40%] lg:w-[30%]">
-        <fieldset className="w-full h-full ">
-          <label className="text-orange-500 font-bold my-2">Username</label>
+    <div className="flex justify-center items-center w-full h-[100vh] bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500">
+      <form className="w-[90%] h-72 border border-gray-200 shadow-md rounded-md p-5 bg-white sm:w-[50%] md:w-[40%] lg:w-[30%]">
+        <fieldset className="w-full h-full">
+          <label className="text-cyan-700 font-bold my-2">Username</label>
           <input
-            onChange={(e) => setAuth({ username: e.target.value })}
-            className="w-full px-2 py-1 border border-black rounded-md my-2"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full px-2 py-1 border border-cyan-700 bg-gray-200 rounded-md my-2 focus:outline-none focus:ring-2 focus:ring-cyan-300"
           />
-          <label className="text-orange-500 font-bold my-2">Password</label>
+          <label className="text-cyan-700 font-bold my-2">Password</label>
           <input
-            onChange={(e) => setAuth({ password: e.target.value })}
-            className="w-full px-2 py-1 border border-black rounded-md my-2"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-2 py-1 border border-cyan-700 bg-gray-200 rounded-md my-2 focus:outline-none focus:ring-2 focus:ring-cyan-300"
           />
           <div className="flex h-[40%] justify-around items-center">
             <button
-              onClick={() => navigate("expensecal")}
-              className="border w-24 px-5 py-2 rounded-md bg-orange-600 text-orange-200 hover:scale-105 "
+              onClick={handleLogin}
+              className="border w-24 px-5 py-2 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:scale-105 hover:from-cyan-600 hover:to-blue-600"
             >
               Login
             </button>
-            <button className="border w-24 px-5 py-2 rounded-md bg-orange-600 text-orange-200 hover:scale-105">
+            <button
+              onClick={handleRegister}
+              className="border w-24 px-5 py-2 rounded-md bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:scale-105 hover:from-cyan-600 hover:to-blue-600"
+            >
               Register
             </button>
           </div>

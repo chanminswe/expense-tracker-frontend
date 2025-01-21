@@ -25,50 +25,62 @@ function DashBoard() {
     title: "Your Expenses",
     pieHole: 0.3,
     backgroundColor: "",
+    legend: { position: "bottom" },
   };
 
   return (
-    <div
-      className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 w-full p-5"
-      style={{ gridAutoFlow: "dense" }}
-    >
-      <IconBox title={"Current amount"} price={2000} />
-      <IconBox title={"Total Spent"} price={200} />
-      <IconBox title={"Category"} price={2000} />
-      <IconBox title={"Revenue"} price={2000} />
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <IconBox title="Current Amount" price={2000} />
+        <IconBox title="Total Spent" price={200} />
+        <IconBox title="Category" price={2000} />
+        <IconBox title="Revenue" price={2000} />
+      </div>
 
-      <div className="col-span-2 sm:col-span-1 lg:col-span-1 h-auto w-full border border-black rounded-md p-3">
-        <p className="text-xl font-semibold mb-3">Last Spent Items</p>
-        <div className="w-full">
-          {transactions.map((transaction, index) => (
-            <div
-              key={index}
-              className="flex justify-between items-center p-2 border-b border-black"
-            >
-              <div className="flex flex-col">
-                <p className="text-sm font-medium">{transaction.date}</p>
-                <p className="text-xs text-gray-600">
-                  {transaction.description}
-                </p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="col-span-1 lg:col-span-1 bg-white border border-gray-300 rounded-lg p-5 shadow-md">
+          <p className="text-lg font-semibold text-teal-700 mb-4">
+            Last Spent Items
+          </p>
+          <div className="divide-y divide-gray-200">
+            {transactions.map((transaction, index) => (
+              <div
+                key={index}
+                className="flex justify-between items-center py-3"
+              >
+                <div>
+                  <p className="text-sm font-medium text-gray-800">
+                    {transaction.date}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {transaction.description}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-medium text-gray-800">
+                    ${transaction.amount}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {transaction.category}
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col items-end">
-                <p className="text-sm font-medium">${transaction.amount}</p>
-                <p className="text-xs text-gray-600">{transaction.category}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        <div className="col-span-1 lg:col-span-2 bg-white border border-gray-300 rounded-lg p-5 shadow-md">
+          <Chart
+            chartType="PieChart"
+            data={data}
+            options={options}
+            width="100%"
+            height="400px"
+          />
         </div>
       </div>
-      <div className="col-span-2 sm:col-span-2 lg:col-span-2 h-auto w-full border border-black rounded-md">
-        <Chart
-          chartType="PieChart"
-          data={data}
-          options={options}
-          width={"100%"}
-          height={"400px"}
-        />
-      </div>
-      <div className="col-span-2 sm:col-span-1 lg:col-span-1 h-auto w-full border border-black rounded-md">
+
+      <div className="mt-6 bg-white border border-gray-300 rounded-lg p-5 shadow-md">
         <Chart
           chartType="LineChart"
           data={[
@@ -80,9 +92,10 @@ function DashBoard() {
             title: "Expenses Over January",
             pieHole: 0.3,
             backgroundColor: "",
+            legend: { position: "bottom" },
           }}
-          width={"100%"}
-          height={"400px"}
+          width="100%"
+          height="400px"
         />
       </div>
     </div>
@@ -91,11 +104,9 @@ function DashBoard() {
 
 function IconBox({ title, price }) {
   return (
-    <div className="flex flex-col h-32 w-full border border-black rounded-md p-2">
-      <p className="text-start">{title}</p>
-      <div className="flex justify-center items-center flex-grow">
-        <p className="text-center text-lg font-semibold">${price}</p>
-      </div>
+    <div className="bg-white border border-gray-300 rounded-lg p-4 shadow-md flex flex-col items-start justify-between">
+      <p className="text-sm font-medium text-gray-600">{title}</p>
+      <p className="text-2xl font-bold text-teal-700 mt-2">${price}</p>
     </div>
   );
 }

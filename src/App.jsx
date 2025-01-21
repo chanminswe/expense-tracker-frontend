@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Login from "./pages/Login";
 import Expense from "./pages/Expense";
 import NavBar from "./components/NavBar";
@@ -8,6 +8,9 @@ import ProtectedRoute, { isAuthenticated } from "./routes/ProtectedRoute";
 
 function App() {
   const isAuth = isAuthenticated();
+  const location = useLocation();
+
+  const showNavBar = isAuth && location.pathname !== '/login';
   return (
     <>
       <Routes>
@@ -21,7 +24,7 @@ function App() {
           <Route path="/dashboard" element={<DashBoard />} />
         </Route>
       </Routes>
-      <NavBar />
+      {showNavBar && <NavBar />}
     </>
   );
 }

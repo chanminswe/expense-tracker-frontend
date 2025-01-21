@@ -1,15 +1,18 @@
 import React from "react";
 import { jwtDecode } from "jwt-decode";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+
 
 export const isAuthenticated = () => {
-  const token = localStorage.getItem("jwtToken");
+  const token = window.localStorage.getItem("jwt_token");
+  console.log("Token from localStorage:", token);
 
   try {
     const { exp } = jwtDecode(token);
+    console.log("Token exp time : ", exp);
 
     if (exp * 1000 < Date.now()) {
-      localStorage.removeItem("jwtToken");
+      localStorage.removeItem("jwt_token");
       return false;
     }
     return true;
@@ -18,8 +21,9 @@ export const isAuthenticated = () => {
   }
 };
 
-function ProtectedRoute({ children }) {
-  return isAuthenticated() ? children : <Navigate to='/login' />
+function ProtectedRoute() {
+  const isAuth = isAuthenticated();
+  return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
 }
 
 export default ProtectedRoute;
