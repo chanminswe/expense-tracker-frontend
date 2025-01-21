@@ -61,6 +61,7 @@ function NavBar() {
           </button>
         </div>
         <button
+          onClick={() => navigate("/transactions")}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-300 group"
         >
@@ -81,6 +82,7 @@ function NavBar() {
           <span className="sr-only">Settings</span>
         </button>
         <button
+          onClick={() => navigate("/profile")}
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-300 group"
         >

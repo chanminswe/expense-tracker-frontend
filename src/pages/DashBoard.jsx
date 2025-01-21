@@ -1,40 +1,57 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 
 function DashBoard() {
-  const data = [
-    ["Category", "Amount"],
-    ["Food", 1],
-    ["Bills", 1],
-    ["Entertainment", 1],
-    ["Transport", 1],
-    ["Other", 1],
-  ];
+  const [mostSpentCategory, setMostSpentCategory] = useState("");
+  const [mostSpentReason, setMostSpentReason] = useState("");
+  const [recentTransactions, setRecentTransactions] = useState([]);
+  const [totalSpent, setTotalSpent] = useState(0);
+  const [categoryBreakdown, setCategoryBreakdown] = useState([]);
+  const [balance, setBalance] = useState(0);
 
-  const transactions = [
-    { date: "2025-01-01", amount: 50, category: "Food", description: "Lunch" },
-    {
-      date: "2025-01-02",
-      amount: 30,
-      category: "Transport",
-      description: "Taxi",
-    },
-  ];
+  const defaultData = [["Category", "Amount"], ["Food", 1], ["Bills", 1]];
 
   const options = {
-    title: "Your Expenses",
+    title: "Your Expenses by Category",
     pieHole: 0.3,
     backgroundColor: "",
     legend: { position: "bottom" },
   };
 
+  useEffect(() => {
+    async function getDashBoard() {
+      const token = window.localStorage.getItem("jwt_token");
+      const dashboard_data = await axios.get(
+        "http://localhost:4040/api/auth/dashboard",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      console.log(dashboard_data.data);
+
+      setMostSpentReason(dashboard_data.data.mostSpentItem);
+      setMostSpentCategory(dashboard_data.data.mostSpentCategory);
+      setBalance(dashboard_data.data.balance);
+      setTotalSpent(dashboard_data.data.totalSpent);
+      setRecentTransactions(dashboard_data.data.recentTransactions);
+      setCategoryBreakdown(dashboard_data.data.categoryBreakdown);
+    }
+
+    getDashBoard();
+  }, []);
+
+  const chartData = [
+    ["Category", "Amount"],
+    ...categoryBreakdown.map((item) => [item._id, item.total]),
+  ];
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <IconBox title="Current Balance" price={2000} />
-        <IconBox title="Total Spent" price={200} />
-        <IconBox title="Most Spent Category" price={2000} />
-        <IconBox title="Most Spent Item" price={2000} />
+        <IconBox title="Current Balance" price={balance} />
+        <IconBox title="Total Spent" price={totalSpent} />
+        <IconBox title="Most Spent Category" price={mostSpentCategory} />
+        <IconBox title="Most Spent Reason" price={mostSpentReason} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -43,7 +60,7 @@ function DashBoard() {
             Last Spent Items
           </p>
           <div className="divide-y divide-gray-200">
-            {transactions.map((transaction, index) => (
+            {recentTransactions.map((transaction, index) => (
               <div
                 key={index}
                 className="flex justify-between items-center py-3"
@@ -72,7 +89,7 @@ function DashBoard() {
         <div className="col-span-1 lg:col-span-2 bg-white border border-gray-300 rounded-lg p-5 shadow-md">
           <Chart
             chartType="PieChart"
-            data={data}
+            data={chartData.length > 1 ? chartData : defaultData} 
             options={options}
             width="100%"
             height="400px"
@@ -106,7 +123,7 @@ function IconBox({ title, price }) {
   return (
     <div className="bg-white border border-gray-300 rounded-lg p-4 shadow-md flex flex-col items-start justify-between">
       <p className="text-sm font-medium text-gray-600">{title}</p>
-      <p className="text-2xl font-bold text-teal-700 mt-2">${price}</p>
+      <p className="text-2xl font-bold text-teal-700 mt-2">{price}</p>
     </div>
   );
 }
