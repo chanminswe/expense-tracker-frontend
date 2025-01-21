@@ -10,7 +10,7 @@ function App() {
   const isAuth = isAuthenticated();
   const location = useLocation();
 
-  const showNavBar = isAuth && location.pathname !== '/login';
+  const showNavBar = isAuth && location.pathname !== "/login";
   return (
     <>
       <Routes>

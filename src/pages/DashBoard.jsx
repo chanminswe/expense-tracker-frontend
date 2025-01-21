@@ -31,10 +31,10 @@ function DashBoard() {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        <IconBox title="Current Amount" price={2000} />
+        <IconBox title="Current Balance" price={2000} />
         <IconBox title="Total Spent" price={200} />
-        <IconBox title="Category" price={2000} />
-        <IconBox title="Revenue" price={2000} />
+        <IconBox title="Most Spent Category" price={2000} />
+        <IconBox title="Most Spent Item" price={2000} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

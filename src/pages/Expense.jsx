@@ -7,19 +7,31 @@ function Expense() {
   const [subAmount, setSubAmount] = useState("");
   const [description, setDescription] = useState("");
   const [ourCategory, setOurCategory] = useState("");
-  const [balance, setBalance] = useState(22);
+  const [balance, setBalance] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    function getBalance(){
-      try{
-        const balance = axios.get();
-
-      }
-      catch(error){
-        console.error("Error Occuring trying to get balance")
+    async function getBalance() {
+      const token = window.localStorage.getItem("jwt_token");
+      try {
+        const req = await axios.get(
+          "http://localhost:4040/api/auth/getBalance",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(req);
+        setBalance(req.data.balance);
+        setSubAmount("");
+        setDescription("");
+      } catch (error) {
+        console.error("Error Occuring trying to get balance");
       }
     }
-  }, []);
+    getBalance();
+  }, [count]);
 
   const handleToggle = (event) => {
     event.preventDefault();
@@ -47,6 +59,7 @@ function Expense() {
           },
         }
       );
+      setCount(count + 1);
       console.log("Expense Added:", response.data);
     } catch (error) {
       console.error("Error occurred at expenseHandler function", error);
@@ -74,6 +87,7 @@ function Expense() {
           },
         }
       );
+      setCount(count + 1);
       console.log("Income Added:", response.data);
     } catch (error) {
       console.error("Error occurred at incomeHandler function", error);
