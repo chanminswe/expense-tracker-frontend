@@ -12,15 +12,15 @@ function App() {
   const isAuth = isAuthenticated();
   const location = useLocation();
 
-  const showNavBar = isAuth && location.pathname !== "/login";
+  const showNavBar = isAuth && location.pathname !== "/";
   return (
     <>
       <Routes>
         <Route
           path="/"
-          element={<Navigate to={isAuth ? "/dashboard" : "/login"} />}
+          element={<Navigate to={isAuth ? "/dashboard" : "/"} />}
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/expensecal" element={<Expense />} />
           <Route path="/dashboard" element={<DashBoard />} />
