@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -15,6 +17,9 @@ function Login() {
         { username, password }
       );
       console.log("Register successful:", response.data);
+      setUsername('');
+      setPassword('');
+      toast.success("Registered Successfully!")
     } catch (error) {
       console.error("Register failed:", error.response?.data || error.message);
       alert("Register failed. Please try again.");
@@ -40,6 +45,7 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center w-full h-[100vh] bg-gray-100">
+      <ToastContainer />
       <form className="w-[90%] max-w-md border border-gray-300 shadow-lg rounded-lg p-6 bg-white sm:w-[75%] md:w-[60%] lg:w-[40%]">
         <h1 className="text-2xl font-bold text-gray-700 text-center mb-6">
           Expense Tracker

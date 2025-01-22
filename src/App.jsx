@@ -16,11 +16,11 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Login />} />
         <Route
           path="/"
           element={<Navigate to={isAuth ? "/dashboard" : "/"} />}
         />
-        <Route path="/" element={<Login />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/expensecal" element={<Expense />} />
           <Route path="/dashboard" element={<DashBoard />} />
