@@ -11,7 +11,7 @@ function Login() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4040/api/auth/register",
+        "https://expense-tracker-api-juxw.onrender.com/api/auth/register",
         { username, password }
       );
       console.log("Register successful:", response.data);
@@ -25,7 +25,7 @@ function Login() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4040/api/auth/login",
+        "https://expense-tracker-api-juxw.onrender.com/api/auth/login",
         { username, password }
       );
       const jwt_Token = response.data.jwt_Token;

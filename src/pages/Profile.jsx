@@ -18,7 +18,7 @@ function Profile() {
         const token = window.localStorage.getItem("jwt_token");
 
         const profileInfo = await axios.get(
-          "http://localhost:4040/api/auth/profile",
+          "https://expense-tracker-api-juxw.onrender.com/api/auth/profile",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

@@ -8,7 +8,7 @@ function TransactionHistory() {
     async function getHistory() {
       const token = window.localStorage.getItem("jwt_token");
       const req = await axios.get(
-        "http://localhost:4040/api/transactions/expenseHistory",
+        "https://expense-tracker-api-juxw.onrender.com/api/transactions/expenseHistory",
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setRecentTransactions(req.data.findHistory);

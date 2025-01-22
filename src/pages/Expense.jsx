@@ -15,7 +15,7 @@ function Expense() {
       const token = window.localStorage.getItem("jwt_token");
       try {
         const req = await axios.get(
-          "http://localhost:4040/api/auth/getBalance",
+          "https://expense-tracker-api-juxw.onrender.com/api/auth/getBalance",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ function Expense() {
       const amount = Number(subAmount);
       const token = localStorage.getItem("jwt_token");
       const response = await axios.post(
-        "http://localhost:4040/api/transactions/costs",
+        "https://expense-tracker-api-juxw.onrender.com/api/transactions/costs",
         {
           amount,
           description,
@@ -75,7 +75,7 @@ function Expense() {
       const amount = Number(subAmount);
       const token = localStorage.getItem("jwt_token");
       const response = await axios.post(
-        "http://localhost:4040/api/transactions/incomes",
+        "https://expense-tracker-api-juxw.onrender.com/api/transactions/incomes",
         {
           amount,
           description,

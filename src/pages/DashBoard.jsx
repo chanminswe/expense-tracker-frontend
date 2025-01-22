@@ -10,7 +10,11 @@ function DashBoard() {
   const [categoryBreakdown, setCategoryBreakdown] = useState([]);
   const [balance, setBalance] = useState(0);
 
-  const defaultData = [["Category", "Amount"], ["Food", 1], ["Bills", 1]];
+  const defaultData = [
+    ["Category", "Amount"],
+    ["Food", 1],
+    ["Bills", 1],
+  ];
 
   const options = {
     title: "Your Expenses by Category",
@@ -23,7 +27,7 @@ function DashBoard() {
     async function getDashBoard() {
       const token = window.localStorage.getItem("jwt_token");
       const dashboard_data = await axios.get(
-        "http://localhost:4040/api/auth/dashboard",
+        "https://expense-tracker-api-juxw.onrender.com/api/auth/dashboard",
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -89,7 +93,7 @@ function DashBoard() {
         <div className="col-span-1 lg:col-span-2 bg-white border border-gray-300 rounded-lg p-5 shadow-md">
           <Chart
             chartType="PieChart"
-            data={chartData.length > 1 ? chartData : defaultData} 
+            data={chartData.length > 1 ? chartData : defaultData}
             options={options}
             width="100%"
             height="400px"
